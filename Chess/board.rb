@@ -2,7 +2,7 @@ require_relative 'piece.rb'
 require_relative 'null_piece.rb'
 
 class NoStartPieceError < ArgumentError; end
-class InvalidMoveError < StandardError; end
+class InvalidPositionError < StandardError; end
 
 class Board
 
@@ -15,8 +15,15 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise NoStartPieceError.new if self[start_pos].is_a?(NullPiece)
-    raise InvalidMoveError.new if valid_pos?(end_pos) == false
+    raise InvalidPositionError.new unless valid_move?(start_pos) && valid_move?(end_pos)
+    current_piece = self[start_pos]
+    self[end_pos] = current_piece
+    self[start_pos] = NullPiece.new
+  end
 
+  def valid_move?(pos)
+    x, y = pos
+    x.between?(0, 7) && y.between?(0, 7)
   end
 
   def [](pos)
