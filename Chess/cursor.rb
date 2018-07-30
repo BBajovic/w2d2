@@ -1,5 +1,7 @@
 require "io/console"
 
+class InvalidMoveError < ArgumentError; end
+
 KEYMAP = {
   " " => :space,
   "h" => :left,
@@ -93,10 +95,11 @@ class Cursor
     when :down
       update_pos(MOVES[:down])
       nil
+    end
   end
 
   def update_pos(diff)
-    raise InvalidMoveError unless valid_cursor_pos?(@cursor_pos, diff)
+    raise InvalidMoveError.new unless valid_cursor_pos?(@cursor_pos, diffI)
     @cursor_pos[0] += diff[0]
     @cursor_pos[1] += diff[1]
     nil
@@ -105,8 +108,7 @@ class Cursor
   def valid_cursor_pos?(pos, diff)
     x, y = pos
     z, t = diff
-
     (x + z).between?(0,7) && (y + t).between?(0,7)
-
   end
+
 end

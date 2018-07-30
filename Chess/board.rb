@@ -6,7 +6,7 @@ class InvalidPositionError < StandardError; end
 
 class Board
 
-  attr_accessor :grid
+  attr_accessor :grid, :row
 
   def initialize
     @rows = Array.new(8) { Array.new(8) }
