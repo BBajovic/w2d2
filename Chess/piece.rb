@@ -1,4 +1,4 @@
 class Piece
 
 
-end 
+end
