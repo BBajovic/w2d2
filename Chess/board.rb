@@ -32,11 +32,10 @@ class Board
         @rows[starting_row][i] = Piece.new
       end
     end
-    @rows.each do |row|
-      row.each do |square|
-        if square == nil
-          square = NullPiece.new
-        end
+    @rows.each_with_index do |row, idx|
+      row.each_with_index do |col, jdx|
+        @rows[idx][jdx] = NullPiece.new if @rows[idx][jdx].nil?
+
       end
     end
   end
