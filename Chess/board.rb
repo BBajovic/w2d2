@@ -1,6 +1,9 @@
 require_relative 'piece.rb'
 require_relative 'null_piece.rb'
 
+class NoStartPieceError < ArgumentError; end
+class InvalidMoveError < StandardError; end
+
 class Board
 
   attr_accessor :grid
@@ -11,19 +14,19 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    # raise NoStartPieceError if rows[start_pos]is_a?(NullPiece)
-    # raise InvalidMoveError if valid_pos?(end_pos) == false
+    raise NoStartPieceError.new if self[start_pos].is_a?(NullPiece)
+    raise InvalidMoveError.new if valid_pos?(end_pos) == false
 
   end
 
   def [](pos)
     x, y = pos
-    rows[x][y]
+    @rows[x][y]
   end
 
   def []=(pos,val)
     x,y = pos
-    rows[x][y] = val
+    @rows[x][y] = val
   end
 
   def populate
