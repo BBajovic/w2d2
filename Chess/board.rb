@@ -1,15 +1,15 @@
-require_relative 'piece.rb'
-require_relative 'null_piece.rb'
+require_relative 'pieces/pieces'
 
 class NoStartPieceError < ArgumentError; end
 class InvalidPositionError < StandardError; end
 
 class Board
   # include Enumerable
-  attr_accessor  :rows
+  attr_accessor  :rows, :sentinel
 
   def initialize
-    @rows = Array.new(8) { Array.new(8) }
+    @sentinel = NullPiece.instance
+    @rows = Array.new(8) { Array.new(8, sentinel) }
     populate
   end
 
@@ -18,7 +18,11 @@ class Board
     raise InvalidPositionError.new unless valid_move?(start_pos) && valid_move?(end_pos)
     current_piece = self[start_pos]
     self[end_pos] = current_piece
-    self[start_pos] = NullPiece.new
+    self[start_pos] = sentinel
+  end
+
+  def empty?(pos)
+    self[pos].is_a?(NullPiece)
   end
 
   def valid_move?(pos)
@@ -27,6 +31,7 @@ class Board
   end
 
   def [](pos)
+    # byebug
     x, y = pos
     @rows[x][y]
   end
@@ -39,15 +44,15 @@ class Board
   def populate
     [0, 1, -2, -1].each do |starting_row|
       8.times do |i|
-        @rows[starting_row][i] = Piece.new
+        @rows[starting_row][i] = Piece.new(1, 2, 3)
       end
     end
-    @rows.each_with_index do |row, idx|
-      row.each_with_index do |col, jdx|
-        @rows[idx][jdx] = NullPiece.new if @rows[idx][jdx].nil?
-
-      end
-    end
+    # @rows.each_with_index do |row, idx|
+    #   row.each_with_index do |col, jdx|
+    #     @rows[idx][jdx] = NullPiece. if @rows[idx][jdx].nil?
+    #
+    #   end
+    # end
   end
 
   # def each(&prc)
