@@ -42,15 +42,22 @@ class Display
   end
 
   def puts_cursor(index, idx, cell)
+    col = :green
+    col = :blue if selected
+
     if idx == 0
-      print "#{index + 1} #{cell.to_s.green} "
+      print "#{index + 1} #{cell.to_s.colorize(col)} "
     elsif idx.between?(1, 6)
-      print "#{cell.to_s.green} "
+      print "#{cell.to_s.colorize(col)} "
     elsif idx == 7
-      print "#{cell.to_s.green} \n"
+      print "#{cell.to_s.colorize(col)} \n"
     end
   end
 
+  def selected
+    board[cursor.cursor_pos].class != NullPiece
+
+  end
 
 
 end
