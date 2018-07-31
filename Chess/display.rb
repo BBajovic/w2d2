@@ -21,10 +21,11 @@ class Display
   end
 
   def render
+    system 'clear'
     # byebug
     arr = []
     (0..7).each {|el| arr << el + 1}
-    puts "   #{arr.join("  ")}"
+    puts "   #{arr.join("     ")}"
 # byebug
     @board.rows.each_with_index do |row, index|
       row.each_with_index do |cell, idx|
