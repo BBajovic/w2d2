@@ -99,7 +99,7 @@ class Cursor
   end
 
   def update_pos(diff)
-    raise InvalidMoveError.new unless valid_cursor_pos?(@cursor_pos, diffI)
+    raise InvalidMoveError.new unless valid_cursor_pos?(@cursor_pos, diff)
     @cursor_pos[0] += diff[0]
     @cursor_pos[1] += diff[1]
     nil

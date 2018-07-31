@@ -5,8 +5,8 @@ class NoStartPieceError < ArgumentError; end
 class InvalidPositionError < StandardError; end
 
 class Board
-
-  attr_accessor :grid, :row
+  # include Enumerable
+  attr_accessor  :rows
 
   def initialize
     @rows = Array.new(8) { Array.new(8) }
@@ -49,5 +49,14 @@ class Board
       end
     end
   end
+
+  # def each(&prc)
+  #   i = 0
+  #   while i < rows.length
+  #     prc.call(rows[i])
+  #     i += 1
+  #   end
+  #
+  # end
 
 end
